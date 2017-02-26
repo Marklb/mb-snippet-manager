@@ -8,6 +8,8 @@ import PageNotFound from './components/PageNotFound';
 
 import $ from "jquery";
 
+
+
 class GithubAuthCallback extends React.Component {
   static propTypes = {
 
@@ -78,10 +80,10 @@ class GithubAuthCallback extends React.Component {
 
 
 const routes = (
-  <Route path="/" component={App}>
+  <Route path="/mb-snippet-manager/" component={App}>
     <IndexRoute component={Home} />
 
-    <Route path="github_auth_callback" component={GithubAuthCallback} />
+    <Route path="/mb-snippet-manager/github_auth_callback" component={GithubAuthCallback} />
 
     <Route path="*" component={PageNotFound} />
   </Route>
