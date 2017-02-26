@@ -10,12 +10,24 @@ export default {
 
   module: {
     loaders: [
-      { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel' },
+      { test: /\.js?$/, exclude: /node_modules/, loader: 'babel-loader' },
+      {
+        test: /\.scss$/,
+        loader: 'style-loader!css-loader!sass-loader?sourceMap'
+      },
+      // {
+      //   test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+      //   loader: 'url-loader?limit=100000'
+      // },
+      {
+        test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)(\?.*$|$)/,
+        loader: 'file-loader'
+      },
     ],
   },
 
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
   },
 
   plugins: process.argv.indexOf('-p') === -1 ? null : [

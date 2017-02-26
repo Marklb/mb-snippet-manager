@@ -1,0 +1,69 @@
+@import './common';
+
+html, body, div, span, a, p, ul, li, h1, code, nav {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  box-sizing: inherit;
+  font: inherit;
+  text-decoration: inherit;
+  text-align: inherit;
+  color: inherit;
+  background: transparent;
+}
+/*pass window height (w/o scroll bars) down to react app, note can't use vh becasue that
+includes scroll bars and mobile browser footer, etc so doesn't give viewable area*/
+html, body { height: 100%; }
+html { background-color: rgb(0, 120, 0); }
+#root {
+  @extend .noise;
+  // background-color: #F0F0F0;
+  background-color: rgba(0,0,0,1);
+  min-height: 100%;
+}
+
+/*required for IE/Edge to be compatible with left:50vw & transform:translate(-50%, 0),
+otherwise there is a phantom div on the right side of the screen (from the left:50vw),
+that the window will scroll to. Note the left:50vw and transform is used to center content
+horizaontally based on vw to prevent content jump when vertical scroll bar show/hide.*/
+body { overflow-x: hidden; }
+
+.container{
+  font-family: $font-family-main;
+  font-weight: 300;
+  font-size: 16px;
+  letter-spacing: 0.025em;
+
+  .page-top-header{
+    text-align: center;
+
+    .page-top-title{
+      @include user-select(none);
+      display: inline-block;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      // font-family: Perpetua, Baskerville, "Big Caslon", "Palatino Linotype", Palatino, "URW Palladio L", "Nimbus Roman No9 L", serif;
+      font-weight: 800px;
+      font-size: 50px;
+      // color: rgba(210,210,210,255);
+      color: rgba(20,20,100,255);
+      text-shadow: 0px 0px 7px rgba(0, 0, 0, 0.8);
+      -webkit-transition: background 0.5s ease;
+              transition: background 0.5s ease;
+      justify-content: space-between;
+      cursor: default;
+
+      &:hover{
+        text-shadow: 0px 0px 7px rgba(0, 0, 80, 0.8);
+      }
+    }
+  }
+
+  .page-content{
+    padding: 10px;
+    margin: 5px;
+    // background-color: rgba(50,50,80,0.9);
+    // background-color: rgba(10,10,10,0.1);
+    @include box-sizing(border-box);
+  }
+}

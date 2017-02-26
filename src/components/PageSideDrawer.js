@@ -3,14 +3,14 @@ import { Link } from 'react-router';
 
 import _ from 'lodash';
 
-// require("../styles/page-not-found.scss");
+require("../styles/page-side-drawer.scss");
 
 
 /*
 */
-export default class PageNotFound extends React.Component {
+export default class PageSideDrawer extends React.Component {
   static propTypes = {
-    location: PropTypes.object.isRequired,
+
   };
 
   constructor(props) {
@@ -23,11 +23,11 @@ export default class PageNotFound extends React.Component {
 
 
   render() {
+    let cssPrefix = 'page-side-drawer';
     return (
-      <p>
-        Page not found - the path, {location.pathname},
-        did not match any React Router routes.
-      </p>
+      <div className=`${cssPrefix}`>
+        
+      </div>
     );
   }
 
