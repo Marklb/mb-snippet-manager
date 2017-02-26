@@ -25,8 +25,8 @@ export default class PageSideDrawer extends React.Component {
   render() {
     let cssPrefix = 'page-side-drawer';
     return (
-      <div className=`${cssPrefix}`>
-        
+      <div className={`${cssPrefix}`}>
+
       </div>
     );
   }

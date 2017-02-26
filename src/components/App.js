@@ -1,14 +1,17 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
+import Radium from 'radium';
+import s from '../styles/app.style'
 
 import _ from 'lodash';
+import $ from "jquery";
 
 require("../styles/app.scss");
 
 
 /*
 */
-export default class App extends React.Component {
+class App extends React.Component {
   static propTypes = {
     children: PropTypes.element.isRequired,
   };
@@ -19,18 +22,21 @@ export default class App extends React.Component {
     this.state = {
 
     };
+
   }
 
+  componentWillUnmount() {
+
+  }
+
+  componentWillMount() {
+
+  }
 
   render() {
     return (
-      <div className='container'>
-        <div className='page-top-header'>
-          <h1 className='page-top-title'>Mark Berry</h1>
-        </div>
-        <div className='page-content'>
-          {children}
-        </div>
+      <div>
+        {this.props.children}
       </div>
     );
   }
@@ -40,5 +46,7 @@ export default class App extends React.Component {
   */
 
 
-
 };
+
+// export default App;
+export default Radium(App);
