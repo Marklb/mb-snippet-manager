@@ -1,6 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import appReducers from './reducers';
 
 import App from './components/App';
 import Home from './components/Home';
@@ -8,7 +11,7 @@ import PageNotFound from './components/PageNotFound';
 
 import $ from "jquery";
 
-
+// window.localStorage.setItem('github_token', '3bf6133e0a75ef9de4c77ea0c358949014cf27ba');
 
 class GithubAuthCallback extends React.Component {
   static propTypes = {
@@ -80,20 +83,24 @@ class GithubAuthCallback extends React.Component {
 
 
 const routes = (
-  <Route path="/mb-snippet-manager/" component={App}>
+  <Route path="/" component={App}>
     <IndexRoute component={Home} />
 
-    <Route path="/mb-snippet-manager/github_auth_callback" component={GithubAuthCallback} />
+    <Route path="github_auth_callback" component={GithubAuthCallback} />
 
     <Route path="*" component={PageNotFound} />
   </Route>
 );
 
 
+let store = createStore(appReducers);
+
 render(
-  <Router
-    history={browserHistory}
-    routes={routes}
-  />,
+  <Provider store={store}>
+    <Router
+      history={browserHistory}
+      routes={routes}
+    />
+  </Provider>,
   document.getElementById('root'),
 );

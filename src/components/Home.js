@@ -4,6 +4,8 @@ import Radium from 'radium';
 import s from '../styles/home.style'
 
 import Sidebar from 'react-sidebar';
+import SidebarGistsList from '../containers/SidebarGistsList';
+import CreateGist from './CreateGist';
 
 import _ from 'lodash';
 import $ from "jquery";
@@ -48,7 +50,13 @@ class Home extends React.Component {
   }
 
   render() {
-    var sidebarContent = <b>Sidebar content etrhueirhtiuweriugh eiuorfjeroij</b>;
+    var sidebarContent = (
+      <div>
+        <b>Sidebar content etrhueirhtiuweriugh eiuorfjeroij</b>
+        <SidebarGistsList />
+      </div>
+    );
+
     return (
       <Sidebar sidebar={sidebarContent}
               open={this.state.sidebarOpen}
@@ -70,6 +78,7 @@ class Home extends React.Component {
           </div>
         </div> */}
         {/* {this.props.children} */}
+        <CreateGist />
       </Sidebar>
     );
   }
@@ -109,11 +118,60 @@ class Home extends React.Component {
     //       console.log(returndata);
     //     }
     //   });
-    let client_id = 'b98b74eef1ea5236ecc3';
-    let url = `https://github.com/login/oauth/authorize`;
-    url += `?client_id=${client_id}&scope="gist"`;
-    console.log(url);
-    window.location = url;
+    // let client_id = 'b98b74eef1ea5236ecc3';
+    // let url = `https://github.com/login/oauth/authorize`;
+    // url += `?client_id=${client_id}&scope="gist"`;
+    // console.log(url);
+    // window.location = url;
+
+    //Get Github Authorization Token with proper scope, print to console
+    // $.ajax({
+    //   url: 'https://api.github.com/authorizations',
+    //   type: 'POST',
+    //   beforeSend: function(xhr) {
+    //     xhr.setRequestHeader("Authorization", "Basic " + btoa("marklb:gamefaqs3"));
+    //   },
+    //   data: '{"scopes":["gist"],"note":"ajax gist test for a user"}'
+    // }).done(function(response) {
+    //   console.log(response);
+    // });
+    const githubToken = window.localStorage.getItem('github_token');
+    //List a gists
+    $.ajax({
+      url: 'https://api.github.com/gists',
+      type: 'GET',
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("Authorization", `token ${githubToken}`);
+      },
+      // data: '{"description": "a gist for a user with token api call via ajax","public": false,"files": {"file1.txt": {"content": "String file contents via ajax"}}}'
+    }).done(function(response) {
+      console.log(response);
+    });
+
+    //Create a Gist with token from above
+    // $.ajax({
+    //   url: 'https://api.github.com/gists',
+    //   type: 'POST',
+    //   beforeSend: function(xhr) {
+    //     xhr.setRequestHeader("Authorization", "token 3bf6133e0a75ef9de4c77ea0c358949014cf27ba");
+    //   },
+    //   data: '{"description": "a gist for a user with token api call via ajax","public": false,"files": {"file1.txt": {"content": "String file contents via ajax"}}}'
+    // }).done(function(response) {
+    //   console.log(response);
+    // });
+
+    //Using Gist ID from the response above, we edit the Gist with Ajax PATCH request
+    // $.ajax({
+    //   url: 'https://api.github.com/gists/GIST-ID-FROM-PREVIOUS-CALL',
+    //   type: 'PATCH',
+    //   beforeSend: function(xhr) {
+    //     xhr.setRequestHeader("Authorization", "token TOKEN-FROM-AUTHORIZATION-CALL");
+    //   },
+    //   data: '{"description": "updated gist via ajax","public": true,"files": {"file1.txt": {"content": "updated String file contents via ajax"}}}'
+    // }).done(function(response) {
+    //   console.log(response);
+    // });
+
   }
 
 
