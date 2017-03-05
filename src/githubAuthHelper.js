@@ -18,9 +18,9 @@ let gah = {
     // console.log(res);
     // console.log('DoCallback');
     // callback(res, undefined);
-    // console.log('currentUser');
-    // console.log(firebase.auth().currentUser);
-    // console.log(firebase.auth());
+    console.log('currentUser');
+    console.log(firebase.auth().currentUser);
+    console.log(firebase.auth());
     // console.log(firebase.auth());
     // firebase.auth().currentUser.getToken(/* forceRefresh */ true).then(function (idToken) {
     //   // Send token to your backend via HTTPS
@@ -29,7 +29,7 @@ let gah = {
     // }).catch(function (error) {
     //   // Handle error
     // });
-    // console.log('currentUser After');
+    console.log('currentUser After');
 
     // let storedToken = window.localStorage.getItem('github_token');
     // if (storedToken) {
@@ -58,6 +58,7 @@ let gah = {
         callback(result, undefined);
       }
     }).catch(function (error) {
+      console.log(error);
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;

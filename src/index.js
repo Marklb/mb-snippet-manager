@@ -1,24 +1,24 @@
-import React from 'react';
-import { render } from 'react-dom';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import React from 'react'
+import { render } from 'react-dom'
+import { Router, Route, IndexRoute, browserHistory } from 'react-router'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
 
-import $ from 'jquery';
+import $ from 'jquery'
 
-import appReducers from './reducers';
+import appReducers from './reducers'
+import { appLink } from './common/app-utils'
 
-import App from './containers/App';
-import Home from './components/Home';
-import PageNotFound from './components/PageNotFound';
+import App from './containers/App'
+import Home from './components/Home'
+import PageNotFound from './components/PageNotFound'
 
 // http://codemirror.net/
 // https://www.npmjs.com/package/codemirror
 // https://github.com/JedWatson/react-codemirror
 
-
 const routes = (
-  <Route path="/mb-snippet-manager/" component={App}>
+  <Route path={appLink("/")} component={App}>
     <IndexRoute component={Home} />
 
 
