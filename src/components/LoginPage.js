@@ -48,8 +48,22 @@ class LoginPage extends React.Component {
   }
 
   render() {
+    let iconName = '';
+    if (this.state.sidebarDocked) {
+      iconName = 'fa-angle-double-left';
+    } else {
+      iconName = 'fa-angle-double-right';
+    }
+
+    let iconElem = (
+      <i style={s.sidebarToggleBtn}
+        className={`fa ${iconName} fa-lg`}
+        onClick={this.onClickSidebarToggleBtn} />
+    );
+
     return (
       <div>
+        {iconElem}
         <div style={s.loginBtn}
           onClick={() => this.onClickLoginBtn()}>
           Login With Github
