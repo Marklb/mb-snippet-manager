@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 import Radium from 'radium'
 import s from '../styles/app.style'
 import { connect } from 'react-redux'
-import { GITHUB_LOGIN, githubLogin } from '../actions'
+import { githubLogin, setGithubInfo} from '../actions'
 import githubAuthHelper from '../githubAuthHelper'
 import * as firebase from 'firebase'
 import * as firebaseHelper from '../common/helpers/firebase-helper'
@@ -22,9 +22,13 @@ class App extends React.Component {
   static propTypes = {
     children: PropTypes.element.isRequired,
     githubAuth: PropTypes.shape({
-      authToken: PropTypes.string
+      authToken: PropTypes.string,
+      displayName: PropTypes.string,
+      email: PropTypes.string,
+      photoURL: PropTypes.string
     }).isRequired,
-    onGithubLogin: PropTypes.func.isRequired
+    onGithubLogin: PropTypes.func.isRequired,
+    setGithubInfo: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -39,7 +43,11 @@ class App extends React.Component {
   componentDidMount() {
     // const info = githubAuthHelper.getUserInfo();
     firebase.auth().onAuthStateChanged(user => {
+      console.log(user);
       if (user) {
+        // user.getToken().then(function (idToken) {
+        //   console.log(idToken);
+        // });
         window.localStorage.setItem(firebaseHelper.storageKey, user.uid);
         this.setState({ uid: user.uid });
       } else {
@@ -58,7 +66,7 @@ class App extends React.Component {
   }
 
   render() {
-    if (this.props.githubAuth.authToken) {
+    if (firebaseHelper.isAuthenticated()) {
       return (
         <div>
           {this.props.children}
@@ -67,7 +75,9 @@ class App extends React.Component {
     } else {
       return (
         <div>
-          <LoginPage onGithubLogin={this.props.onGithubLogin} />
+          <LoginPage 
+            onGithubLogin={this.props.onGithubLogin} 
+            setGithubInfo={this.props.setGithubInfo} />
         </div>
       );
     }
@@ -93,6 +103,9 @@ const mapDispatchToProps = (dispatch) => {
     onGithubLogin: (authToken) => {
       console.log(`Yo: ${authToken}`);
       dispatch(githubLogin(authToken))
+    },
+    setGithubInfo: (info) => {
+      dispatch(setGithubInfo(info))
     }
   }
 }

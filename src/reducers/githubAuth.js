@@ -1,10 +1,17 @@
-import { GITHUB_LOGIN } from '../actions'
+import { GITHUB_LOGIN, SET_GITHUB_INFO } from '../actions'
 
 const initialState = {
-  authToken: undefined
+  authToken: null,
+  accessToken: null,
+  displayName: null,
+  email: null,
+  photoURL: null,
+  uid: null,
+  username: null
 }
 
 const githubAuth = (state = initialState, action) => {
+  console.log('githubAuth');
   switch (action.type) {
     case GITHUB_LOGIN:
       console.log(action);
@@ -14,6 +21,20 @@ const githubAuth = (state = initialState, action) => {
       })
       console.log(newState);
       return newState;
+
+    case SET_GITHUB_INFO:
+      console.log(action);
+      // console.log(action.authToken);
+      let newState2 = Object.assign({}, state, {
+        accessToken: action.accessToken,
+        displayName: action.displayName,
+        email: action.email,
+        photoURL: action.photoURL,
+        uid: action.uid,
+        username: action.username,
+      });
+      console.log(newState2);
+      return newState2;
 
     default:
       return state

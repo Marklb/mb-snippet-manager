@@ -1,12 +1,13 @@
-import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
-import Radium from 'radium';
+import React, { PropTypes } from 'react'
+import { Link } from 'react-router'
+import Radium from 'radium'
 import s from '../styles/home.style'
-import githubAuthHelper from '../githubAuthHelper';
+import githubAuthHelper from '../githubAuthHelper'
 
-import Sidebar from 'react-sidebar';
-import SidebarGistsList from '../containers/SidebarGistsList';
-import CreateGist from './CreateGist';
+import Sidebar from 'react-sidebar'
+import SidebarGistsList from '../containers/SidebarGistsList'
+import CreateGist from './CreateGist'
+import MenuAccountDropdown from '../containers/MenuAccountDropdown'
 
 import _ from 'lodash';
 import $ from "jquery";
@@ -136,9 +137,12 @@ class Home extends React.Component {
         onSetOpen={this.onSetSidebarOpen}>
         <div style={s.topHeader}>
           {this.getSidebarToggleBtn()}
-          <div style={s.githubAuthBtn} onClick={this.onClickGithubAuthBtn}>
-            Login
-        </div>
+          {/*<div style={s.githubAuthBtn} onClick={this.onClickGithubAuthBtn}>
+            Logout
+          </div>*/}
+          <div style={s.menuBtnsContainer}>
+            <MenuAccountDropdown />
+          </div>
         </div>
 
         {/* <div className='container'>
@@ -168,7 +172,8 @@ class Home extends React.Component {
   }
 
   onClickGithubAuthBtn() {
-    githubAuthHelper.signIn();
+    // githubAuthHelper.signIn();
+    githubAuthHelper.signOut();
     // $.ajax({
     //     url:"https://api.github.com/user",
     //     dataType: "jsonp",

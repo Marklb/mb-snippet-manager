@@ -13,6 +13,7 @@
   },
   "author": "Mark Berry",
   "dependencies": {
+    "axios": "^0.15.3",
     "bluebird": "^3.4.7",
     "firebase": "^3.7.0",
     "font-awesome": "^4.7.0",
@@ -21,7 +22,10 @@
     "jquery": "^3.1.1",
     "lodash": "^4.17.4",
     "radium": "^0.18.1",
+    "rc-dropdown": "^1.4.10",
+    "rc-menu": "^5.0.9",
     "react": "^15.4.1",
+    "react-addons-css-transition-group": "^15.4.2",
     "react-dom": "^15.4.1",
     "react-interactive": "^0.4.0",
     "react-redux": "^5.0.3",

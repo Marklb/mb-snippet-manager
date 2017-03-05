@@ -2,11 +2,12 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+// import { createStore } from 'redux'
+import { store } from './appStore'
 
 import $ from 'jquery'
 
-import appReducers from './reducers'
+// import appReducers from './reducers'
 import { appLink } from './common/app-utils'
 
 import App from './containers/App'
@@ -28,10 +29,10 @@ const routes = (
 
 // https://github.com/gaearon/redux-devtools#setup-instructions
 // https://github.com/zalmoxisus/redux-devtools-extension
-const store = createStore(appReducers, 
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+// const store = createStore(appReducers, 
+//   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
-console.log(store.getState());
+// console.log(store.getState());
 
 render(
   <Provider store={store}>

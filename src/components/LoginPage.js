@@ -13,7 +13,8 @@ import $ from "jquery";
 class LoginPage extends React.Component {
   static propTypes = {
     // children: PropTypes.element.isRequired,
-    onGithubLogin: PropTypes.func.isRequired
+    onGithubLogin: PropTypes.func.isRequired,
+    setGithubInfo: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -39,31 +40,19 @@ class LoginPage extends React.Component {
   }
 
   onClickLoginBtn() {
+    console.log('this.props.setGithubInfo');
+    console.log(this.props.setGithubInfo);
     githubAuthHelper.signIn((res, err) => {
       if (err) return;
 
       console.log(res);
       this.props.onGithubLogin(res.credential.accessToken);
-    });
+    }, this.props.setGithubInfo);
   }
 
   render() {
-    let iconName = '';
-    if (this.state.sidebarDocked) {
-      iconName = 'fa-angle-double-left';
-    } else {
-      iconName = 'fa-angle-double-right';
-    }
-
-    let iconElem = (
-      <i style={s.sidebarToggleBtn}
-        className={`fa ${iconName} fa-lg`}
-        onClick={this.onClickSidebarToggleBtn} />
-    );
-
     return (
       <div>
-        {iconElem}
         <div style={s.loginBtn}
           onClick={() => this.onClickLoginBtn()}>
           Login With Github

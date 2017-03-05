@@ -41,6 +41,14 @@ s.githubAuthBtn = {
   // border: '1px solid rgba(230,230,230,1)',
 };
 
+s.menuBtnsContainer = {
+  // color: 'rgba(230,230,230,1)',
+  // backgroundColor: 'rgba(20,40,60,1)',
+  // padding: '4px 6px',
+  float: 'right',
+};
+
+
 s.sideBarContent = {
   backgroundColor: 'rgba(20,40,60,1)',
   height: '100%',

@@ -15,7 +15,8 @@ const getGists = (gists, filter) => {
 
 const mapStateToProps = (state) => {
   return {
-    gists: getGists(state.gists, state.visibilityFilter)
+    gists: getGists(state.gists, state.visibilityFilter),
+    githubAuth: state.githubAuth
   }
 }
 
