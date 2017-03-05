@@ -3,8 +3,9 @@
   "version": "3.0.0",
   "description": "Snippet manager using Github gists",
   "scripts": {
-    "start": "webpack-dev-server -d --inline --host 0.0.0.0 --history-api-fallback --progress",
-    "build": "webpack -p"
+    "start": "webpack-dev-server -d --inline --host 0.0.0.0 --port 3050 --history-api-fallback --progress",
+    "build": "webpack -p",
+    "portproxy": "node ./scripts/netsh-portproxy-set"
   },
   "repository": {
     "type": "git",
@@ -13,6 +14,7 @@
   "author": "Mark Berry",
   "dependencies": {
     "bluebird": "^3.4.7",
+    "firebase": "^3.7.0",
     "font-awesome": "^4.7.0",
     "github": "^9.0.0",
     "inline-style-prefixer": "^3.0.0",
@@ -42,6 +44,7 @@
     "eslint-plugin-react": "^6.8.0",
     "file-loader": "^0.10.0",
     "node-sass": "^4.5.0",
+    "runas": "^3.1.1",
     "sass-loader": "^6.0.1",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",

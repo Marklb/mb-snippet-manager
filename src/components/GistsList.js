@@ -29,9 +29,20 @@ export default class GistsList extends React.Component {
     };
   }
 
+  componentDidMount() {
+    
+  }
+
+  componentWillMount() {
+    
+  }
+
+  componentWillUnmount() {
+
+  }
 
   render() {
-    console.log('wfeijefiowj');
+    console.log('GistsList render');
     const gists = this.props.gists;
     const onGistClick = this.props.onGistClick;
     return (

@@ -1,0 +1,12 @@
+{
+  "editor.formatOnPaste": true,
+  "editor.minimap.enabled": true,
+  "eslint.enable": false,
+
+  "files.associations": {
+    "*.m": "matlab",
+    "*.h.in": "cpp",
+    "**/components/*.js": "javascriptreact",
+    "**/containers/*.js": "javascriptreact"
+  }
+}

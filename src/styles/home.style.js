@@ -41,4 +41,9 @@ s.githubAuthBtn = {
   // border: '1px solid rgba(230,230,230,1)',
 };
 
+s.sideBarContent = {
+  backgroundColor: 'rgba(20,40,60,1)',
+  height: '100%',
+};
+
 export default prefixAll(s);

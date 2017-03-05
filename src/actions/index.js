@@ -1,3 +1,14 @@
+export const GITHUB_LOGIN = 'GITHUB_LOGIN';
+
+export const githubLogin = (authToken) => {
+  console.log(`githubLogin: ${authToken}`);
+  return {
+    type: GITHUB_LOGIN,
+    authToken: authToken
+    // ...authToken
+  }
+}
+
 let nextGistId = 0
 export const addGist = (text) => {
   return {
