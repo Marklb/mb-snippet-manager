@@ -18,7 +18,7 @@ import PageNotFound from './components/PageNotFound';
 
 
 const routes = (
-  <Route path="/" component={App}>
+  <Route path="/mb-snippet-manager/" component={App}>
     <IndexRoute component={Home} />
 
 
