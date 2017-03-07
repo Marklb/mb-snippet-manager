@@ -15,11 +15,12 @@ let gah = {
     // }
   },
 
-  updateUserInfo: (data, reduxUpdate) => {
-    console.log('updateUserInfo');
-    console.log(data);
+  // updateUserInfo: (data, reduxUpdate) => {
+  updateUserInfo: (data, callback) => {
+    // console.log('updateUserInfo');
+    // console.log(data);
     const token = window.localStorage.getItem('github_token');
-    console.log(token);
+    // console.log(token);
     var config = {
       headers: { 'Authorization': `token ${token}` }
     };
@@ -40,15 +41,15 @@ let gah = {
     if (data.uid) {
       userData.uid = data.uid;
     }
-    console.log(gah.USER_DATA_KEY);
+    // console.log(gah.USER_DATA_KEY);
     window.localStorage.setItem(gah.USER_DATA_KEY, JSON.stringify(userData));
     // store.dispatch(reduxActions.setGithubInfo(userData));
-    console.log('Attempt reduxUpdate 1');
-    console.log(reduxUpdate);
-    if (reduxUpdate) {
-      console.log('Attempt reduxUpdate 1.1');
-      reduxUpdate(userData);
-    }
+    // console.log('Attempt reduxUpdate 1');
+    // console.log(reduxUpdate);
+    // if (reduxUpdate) {
+    //   // console.log('Attempt reduxUpdate 1.1');
+    //   reduxUpdate(userData);
+    // }
     
     if (data.accessToken) {
       axios.get('https://api.github.com/user/8348647', config)
@@ -61,18 +62,25 @@ let gah = {
             JSON.stringify(userDataTmp));
           // store.dispatch(reduxActions.setGithubInfo(userDataTmp));
           console.log('Attempt reduxUpdate 2');
-          if (reduxUpdate) {
-            console.log('Attempt reduxUpdate 2.1');
-            reduxUpdate(userDataTmp);
+          // if (reduxUpdate) {
+          //   // console.log('Attempt reduxUpdate 2.1');
+          //   reduxUpdate(userDataTmp);
+          // }
+          if (callback) {
+            console.log('Attempt callback 2.1');
+            callback(userDataTmp);
           }
         })
         .catch(function (error) {
           console.log(error);
         });
+    }else{
+      callback(userData);
     }
   },
 
-  signIn: (callback, setGithubInfoFn) => {
+  // signIn: (callback, setGithubInfoFn) => {
+    signIn: (callback) => {
 
     // let res = {
     //   credential: {
@@ -115,26 +123,19 @@ let gah = {
       // The signed-in user info.
       var user = result.user;
       // ...
-      console.log('result');
-      console.log(result);
+      // console.log('result');
+      // console.log(result);
       window.localStorage.setItem('github_token', token);
-      // gah.updateUserInfo({
-      //   accessToken: token,
-      //   displayName: user.displayName,
-      //   email: user.email,
-      //   photoURL: user.photoURL,
-      //   uid: user.uid
-      // });
       if (callback) {
-        console.log('DoCallback');
-        callback(result, undefined);
+        // console.log('DoCallback');
         gah.updateUserInfo({
           accessToken: token,
           displayName: user.displayName,
           email: user.email,
           photoURL: user.photoURL,
           uid: user.uid
-        }, setGithubInfoFn);
+        }, callback);
+        // callback(result, undefined);
       }else{
         gah.updateUserInfo({
           accessToken: token,
@@ -145,7 +146,7 @@ let gah = {
         });
       }
     }).catch(function (error) {
-      console.log(error);
+      // console.log(error);
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;

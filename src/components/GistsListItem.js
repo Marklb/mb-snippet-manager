@@ -3,13 +3,11 @@ import { Link } from 'react-router';
 import Radium from 'radium';
 import s from '../styles/gistsListItem.style'
 
-import _ from 'lodash';
-
 
 
 /*
 */
-export default class GistsListItem extends React.Component {
+class GistsListItem extends React.Component {
   static propTypes = {
     onClick: PropTypes.func.isRequired,
     completed: PropTypes.bool.isRequired,
@@ -34,7 +32,8 @@ export default class GistsListItem extends React.Component {
       <li
         onClick={onClick}
         style={{
-          textDecoration: completed ? 'line-through' : 'none'
+          textDecoration: completed ? 'line-through' : 'none',
+          ...s.item
         }}
       >
         {text}
@@ -42,10 +41,7 @@ export default class GistsListItem extends React.Component {
     );
   }
 
-  /*
-  Event Callbacks
-  */
-
-
 
 };
+
+export default Radium(GistsListItem)

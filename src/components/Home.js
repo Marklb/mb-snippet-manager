@@ -125,7 +125,7 @@ class Home extends React.Component {
     }
     let sidebarContent = (
       <div style={sidebarStyle}>
-        <b>Sidebar content etrhueirhtiuweriugh eiuorfjeroij uygiytufytifty</b>
+        {/*<b>Sidebar content etrhueirhtiuweriugh eiuorfjeroij uygiytufytifty</b>*/}
         <SidebarGistsList />
       </div>
     );
@@ -153,7 +153,7 @@ class Home extends React.Component {
             {this.props.children}
           </div>
         </div> */}
-        {/* {this.props.children} */}
+         {this.props.children} 
         <CreateGist />
       </Sidebar>
     );

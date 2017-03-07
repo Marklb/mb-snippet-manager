@@ -12,7 +12,7 @@ import _ from 'lodash';
 
 /*
 */
-export default connect()(class CreateGist extends React.Component {
+class CreateGist extends React.Component {
   static propTypes = {
 
   };
@@ -54,4 +54,7 @@ export default connect()(class CreateGist extends React.Component {
 
 
 
-});
+};
+
+
+export default connect()(Radium(CreateGist))

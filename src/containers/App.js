@@ -3,8 +3,8 @@ import { Link } from 'react-router'
 import Radium from 'radium'
 import s from '../styles/app.style'
 import { connect } from 'react-redux'
-import { githubLogin, setGithubInfo} from '../actions'
-import githubAuthHelper from '../githubAuthHelper'
+// import { githubLogin, setGithubInfo} from '../actions'
+import { githubLogin, githubAuthInit } from '../actions/githubActions'
 import * as firebase from 'firebase'
 import * as firebaseHelper from '../common/helpers/firebase-helper'
 
@@ -22,39 +22,52 @@ class App extends React.Component {
   static propTypes = {
     children: PropTypes.element.isRequired,
     githubAuth: PropTypes.shape({
-      authToken: PropTypes.string,
+      isInitializing: PropTypes.bool,
+      isLoggingIn: PropTypes.bool,
+      isLoggedIn: PropTypes.bool,
+      accessToken: PropTypes.string,
       displayName: PropTypes.string,
+      firbase_uid: PropTypes.string,
+      avatar_url: PropTypes.string,
+      login: PropTypes.string,
+      username: PropTypes.string,
       email: PropTypes.string,
-      photoURL: PropTypes.string
+      bio: PropTypes.string,
+      events_url: PropTypes.string,
+      private_gists: PropTypes.number,
+      github_id: PropTypes.number,
+      public_gists: PropTypes.number,
+      url: PropTypes.string,
     }).isRequired,
-    onGithubLogin: PropTypes.func.isRequired,
-    setGithubInfo: PropTypes.func.isRequired
+    githubLogin: PropTypes.func.isRequired,
+    githubSignOut: PropTypes.func.isRequired,
+    githubAuthInit: PropTypes.func.isRequired,
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      uid: null
+      // uid: null
     };
 
   }
 
   componentDidMount() {
     // const info = githubAuthHelper.getUserInfo();
-    firebase.auth().onAuthStateChanged(user => {
-      console.log(user);
-      if (user) {
-        // user.getToken().then(function (idToken) {
-        //   console.log(idToken);
-        // });
-        window.localStorage.setItem(firebaseHelper.storageKey, user.uid);
-        this.setState({ uid: user.uid });
-      } else {
-        window.localStorage.removeItem(firebaseHelper.storageKey);
-        this.setState({ uid: null });
-      }
-    });
+    // firebase.auth().onAuthStateChanged(user => {
+    //   // console.log(user);
+    //   if (user) {
+    //     // user.getToken().then(function (idToken) {
+    //     //   console.log(idToken);
+    //     // });
+    //     window.localStorage.setItem(firebaseHelper.storageKey, user.uid);
+    //     this.setState({ uid: user.uid });
+    //   } else {
+    //     window.localStorage.removeItem(firebaseHelper.storageKey);
+    //     this.setState({ uid: null });
+    //   }
+    // });
   }
 
   componentWillUnmount() {
@@ -62,31 +75,27 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-
+    console.log('componentWillMount');
+    this.props.githubAuthInit();
   }
 
   render() {
-    if (firebaseHelper.isAuthenticated()) {
+    /*return (
+      <div>
+        {this.props.children}
+      </div>
+    );*/
+    // if (firebaseHelper.isAuthenticated()) {
+    if (this.props.githubAuth.isLoggedIn) {
       return (
         <div>
           {this.props.children}
         </div>
       );
     } else {
-      return (
-        <div>
-          <LoginPage 
-            onGithubLogin={this.props.onGithubLogin} 
-            setGithubInfo={this.props.setGithubInfo} />
-        </div>
-      );
+      return (<LoginPage onLoginBtnClick={this.props.githubLogin} />);
     }
   }
-
-  /*
-  Event Callbacks
-  */
-
 
 };
 
@@ -100,17 +109,19 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onGithubLogin: (authToken) => {
-      console.log(`Yo: ${authToken}`);
-      dispatch(githubLogin(authToken))
+    githubLogin: () => {
+      dispatch(githubLogin())
     },
-    setGithubInfo: (info) => {
-      dispatch(setGithubInfo(info))
-    }
+    githubSignOut: () => {
+      dispatch(githubSignOut());
+    },
+    githubAuthInit: () => {
+      dispatch(githubAuthInit())
+    },
   }
 }
 
-// export default App;
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps

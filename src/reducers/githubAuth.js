@@ -1,40 +1,48 @@
-import { GITHUB_LOGIN, SET_GITHUB_INFO } from '../actions'
+import {
+  GITHUB_AUTH_IS_INITIALIZING, GITHUB_IS_LOGGING_IN, GITHUB_IS_LOGGED_IN,
+  GITHUB_SET_INFO} from '../actions/githubActions'
 
 const initialState = {
-  authToken: null,
+  isInitializing: false,
+  isLoggingIn: false,
+  isLoggedIn: false,
+
   accessToken: null,
   displayName: null,
+  firbase_uid: null,
+  avatar_url: null,
+  login: null,
+  username: null,
   email: null,
-  photoURL: null,
-  uid: null,
-  username: null
+  bio: null,
+  events_url: null,
+  private_gists: null,
+  github_id: null,
+  public_gists: null,
+  url: null,
 }
 
 const githubAuth = (state = initialState, action) => {
-  console.log('githubAuth');
   switch (action.type) {
-    case GITHUB_LOGIN:
-      console.log(action);
-      console.log(action.authToken);
-      let newState = Object.assign({}, state, {
-        authToken: action.authToken
-      })
-      console.log(newState);
-      return newState;
-
-    case SET_GITHUB_INFO:
-      console.log(action);
-      // console.log(action.authToken);
-      let newState2 = Object.assign({}, state, {
-        accessToken: action.accessToken,
-        displayName: action.displayName,
-        email: action.email,
-        photoURL: action.photoURL,
-        uid: action.uid,
-        username: action.username,
+    case GITHUB_AUTH_IS_INITIALIZING:
+      return Object.assign({}, state, {
+        isInitializing: action.isInitializing,
       });
-      console.log(newState2);
-      return newState2;
+
+    case GITHUB_IS_LOGGING_IN:
+      return Object.assign({}, state, {
+        isLoggingIn: action.isLoggingIn,
+      });
+
+    case GITHUB_IS_LOGGED_IN:
+      return Object.assign({}, state, {
+        isLoggedIn: action.isLoggedIn,
+      });
+
+    case GITHUB_SET_INFO:
+      const obj = Object.assign({}, state, { ...action });
+      delete obj.type
+      return obj;
 
     default:
       return state

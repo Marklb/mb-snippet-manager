@@ -8,7 +8,7 @@ require("../styles/page-side-drawer.scss");
 
 /*
 */
-export default class PageSideDrawer extends React.Component {
+class PageSideDrawer extends React.Component {
   static propTypes = {
 
   };
@@ -38,3 +38,5 @@ export default class PageSideDrawer extends React.Component {
 
 
 };
+
+export default Radium(PageSideDrawer)

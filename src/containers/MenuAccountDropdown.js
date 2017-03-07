@@ -85,11 +85,11 @@ class MenuAccountDropdown extends React.Component {
     // // axios.get('https://api.github.com/users')
     axios.get('https://api.github.com/user/8348647', config)
     .then(function (response) {
-      console.log('resppp');
-      console.log(response);
+      // console.log('resppp');
+      // console.log(response);
     })
     .catch(function (error) {
-      console.log(error);
+      // console.log(error);
     });
     firebase.auth().getRedirectResult().then(function (result) {
       if (result.credential) {
@@ -99,7 +99,7 @@ class MenuAccountDropdown extends React.Component {
       }
       // The signed-in user info.
       var user = result.user;
-      console.log(result);
+      // console.log(result);
     }).catch(function (error) {
       // Handle Errors here.
       var errorCode = error.code;
