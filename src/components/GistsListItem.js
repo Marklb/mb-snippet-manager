@@ -10,8 +10,9 @@ import s from '../styles/gistsListItem.style'
 class GistsListItem extends React.Component {
   static propTypes = {
     onClick: PropTypes.func.isRequired,
-    completed: PropTypes.bool.isRequired,
-    text: PropTypes.string.isRequired
+    // completed: PropTypes.bool.isRequired,
+    // text: PropTypes.string.isRequired
+    gist: PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -24,15 +25,20 @@ class GistsListItem extends React.Component {
 
 
   render() {
-    console.log('opopopo');
     const onClick = this.props.onClick;
-    const completed = this.props.completed;
-    const text = this.props.text;
+    // const text = this.props.gist.id;
+    const gist = this.props.gist.data;
+    console.log(gist);
+    const files = Object.keys(gist.files);
+    console.log(files);
+    let text = gist.id;
+    if (files.length > 0) {
+      text = files[0];
+    }
     return (
       <li
         onClick={onClick}
         style={{
-          textDecoration: completed ? 'line-through' : 'none',
           ...s.item
         }}
       >
@@ -43,5 +49,7 @@ class GistsListItem extends React.Component {
 
 
 };
+
+// textDecoration: completed ? 'line-through' : 'none',
 
 export default Radium(GistsListItem)

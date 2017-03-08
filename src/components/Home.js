@@ -2,15 +2,11 @@ import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import Radium from 'radium'
 import s from '../styles/home.style'
-import githubAuthHelper from '../githubAuthHelper'
 
 import Sidebar from 'react-sidebar'
 import SidebarGistsList from '../containers/SidebarGistsList'
 import CreateGist from './CreateGist'
 import MenuAccountDropdown from '../containers/MenuAccountDropdown'
-
-import _ from 'lodash';
-import $ from "jquery";
 
 require("../styles/home.scss");
 
@@ -173,7 +169,7 @@ class Home extends React.Component {
 
   onClickGithubAuthBtn() {
     // githubAuthHelper.signIn();
-    githubAuthHelper.signOut();
+    this.props.githubSignOut();
     // $.ajax({
     //     url:"https://api.github.com/user",
     //     dataType: "jsonp",

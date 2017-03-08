@@ -3,18 +3,12 @@ import { Link } from 'react-router'
 import Radium from 'radium'
 import s from '../styles/menuAccountDropdown.style'
 import { connect } from 'react-redux'
-import { GITHUB_LOGIN, githubLogin } from '../actions'
-import githubAuthHelper from '../githubAuthHelper'
-import * as firebase from 'firebase'
-import * as firebaseHelper from '../common/helpers/firebase-helper'
+import { githubLogOut } from '../actions/githubActions'
 import * as axios from 'axios'
 
 import Dropdown from 'rc-dropdown';
 import Menu, { Item as MenuItem, Divider } from 'rc-menu';
 import 'rc-dropdown/assets/index.css';
-
-import _ from 'lodash'
-import $ from 'jquery'
 
 // require("../styles/menu-account-dropdown.scss");
 
@@ -23,12 +17,24 @@ import $ from 'jquery'
 class MenuAccountDropdown extends React.Component {
   static propTypes = {
     githubAuth: PropTypes.shape({
-      authToken: PropTypes.string,
+      isInitializing: PropTypes.bool,
+      isLoggingIn: PropTypes.bool,
+      isLoggedIn: PropTypes.bool,
+      accessToken: PropTypes.string,
       displayName: PropTypes.string,
+      firbase_uid: PropTypes.string,
+      avatar_url: PropTypes.string,
+      login: PropTypes.string,
+      username: PropTypes.string,
       email: PropTypes.string,
-      photoURL: PropTypes.string
+      bio: PropTypes.string,
+      events_url: PropTypes.string,
+      private_gists: PropTypes.number,
+      github_id: PropTypes.number,
+      public_gists: PropTypes.number,
+      url: PropTypes.string,
     }).isRequired,
-    onGithubLogin: PropTypes.func.isRequired
+    githubLogOut: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -113,14 +119,15 @@ class MenuAccountDropdown extends React.Component {
   }
 
   onClickSettings() {
-    var provider = new firebase.auth.GithubAuthProvider();
-    provider.addScope('user');
-    provider.addScope('gist');
-    firebase.auth().signInWithRedirect(provider);
+    // var provider = new firebase.auth.GithubAuthProvider();
+    // provider.addScope('user');
+    // provider.addScope('gist');
+    // firebase.auth().signInWithRedirect(provider);
   }
 
   onClickLogout() {
-    githubAuthHelper.signOut();
+    // githubAuthHelper.signOut();
+    this.props.githubLogOut();
     this.setState({
       visible: false,
     });
@@ -193,9 +200,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onGithubLogin: (authToken) => {
-      dispatch(githubLogin(authToken))
-    }
+    githubLogOut: () => {
+      dispatch(githubLogOut())
+    },
   }
 }
 

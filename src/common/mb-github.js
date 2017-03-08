@@ -80,12 +80,53 @@ export const githubSignIn = () => {
 }
 
 export const githubSignOut = () => {
+  return new Promise((resolve, reject) => {
     firebase.auth().signOut().then(function () {
       // Sign-out successful.
+      window.localStorage.removeItem(USER_DATA_KEY)
+      resolve('Signed out');
     }, function (error) {
       // An error happened.
+      reject(Error('Problem Signing out'));
     });
+  });
 }
+
+/**
+ * 
+ * @param {object} opts 
+ */
+export const githubGetGists = (opts = undefined) => {
+  // TODO: Implement opts argument to get all gists or from specified time
+  return new Promise((resolve, reject) => {
+    const info = githubGetInfo();
+    if (info === null) {
+      reject(Error('Unable to retrieve github info. No stored info.'));
+    }
+
+    const page = null; // Not implemented yet
+
+    const token = info.accessToken;
+    const config = {
+      headers: { 'Authorization': `token ${token}` }
+    };
+    axios.get('https://api.github.com/gists', config)
+      .then(function (response) {
+        console.log('response');
+        console.log(response);
+        resolve({
+          page: page,
+          response: response
+        });
+      })
+      .catch(function (error) {
+        if (info === null) {
+          reject(Error('Unable to retrieve github info. Github api error.'));
+        }
+      });
+
+  });
+};
 
 // resolve("Logged in")
 // reject(Error('Problem Logging In'))

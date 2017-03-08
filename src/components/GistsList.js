@@ -6,7 +6,6 @@ import s from '../styles/gistsList.style'
 import GistsListItem from './GistsListItem'
 import FontAwesomeIcon from './FontAwesomeIcon'
 
-import _ from 'lodash'
 import * as axios from 'axios'
 
 
@@ -16,17 +15,11 @@ import * as axios from 'axios'
 class GistsList extends React.Component {
   static propTypes = {
     gists: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      completed: PropTypes.bool.isRequired,
-      text: PropTypes.string.isRequired
+      id: PropTypes.string.isRequired,
+      data: PropTypes.object.isRequired
     }).isRequired).isRequired,
-    githubAuth: PropTypes.shape({
-      authToken: PropTypes.string,
-      displayName: PropTypes.string,
-      email: PropTypes.string,
-      photoURL: PropTypes.string
-    }).isRequired,
-    onGistClick: PropTypes.func.isRequired
+    githubAuth: PropTypes.object,
+    refreshGists: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -52,30 +45,31 @@ class GistsList extends React.Component {
 
   onClickRefreshListBtn(e) {
     console.log('Clicked');
+    this.props.refreshGists();
     // const token = window.localStorage.getItem('github_token');
     // console.log(token);
-    const token = this.props.githubAuth.accessToken;
-    console.log(this.props);
-    console.log(token);
-    var config = {
-      headers: { 'Authorization': `token ${token}` }
-    };
-    // // axios.get('"https://api.github.com/users', {
-    // //   params: {
-    // //     ID: 8348647
-    // //   }
-    // // })
-    // // axios.get('https://api.github.com/users/marklb')
-    // axios.get('https://api.github.com/user/8348647')
-    // // axios.get('https://api.github.com/users')
-    axios.get('https://api.github.com/gists', config)
-      .then(function (response) {
-        console.log('response');
-        console.log(response);
-      })
-      .catch(function (error) {
-        // console.log(error);
-      });
+    // const token = this.props.githubAuth.accessToken;
+    // console.log(this.props);
+    // console.log(token);
+    // var config = {
+    //   headers: { 'Authorization': `token ${token}` }
+    // };
+    // // // axios.get('"https://api.github.com/users', {
+    // // //   params: {
+    // // //     ID: 8348647
+    // // //   }
+    // // // })
+    // // // axios.get('https://api.github.com/users/marklb')
+    // // axios.get('https://api.github.com/user/8348647')
+    // // // axios.get('https://api.github.com/users')
+    // axios.get('https://api.github.com/gists', config)
+    //   .then(function (response) {
+    //     console.log('response');
+    //     console.log(response);
+    //   })
+    //   .catch(function (error) {
+    //     // console.log(error);
+    //   });
   }
 
   render() {
@@ -100,7 +94,7 @@ class GistsList extends React.Component {
           {gists.map(gist =>
             <GistsListItem
               key={gist.id}
-              {...gist}
+              gist={gist}
               onClick={() => onGistClick(gist.id)}
             />
           )}

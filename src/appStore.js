@@ -1,32 +1,44 @@
 import { createStore, applyMiddleware, compose } from 'redux'
+import { persistStore, autoRehydrate } from 'redux-persist'
 import thunk from 'redux-thunk'
 import appReducers from './reducers'
 
-const middlewares = [thunk];
+const middlewares = [thunk]
 
-const isProduction = process.argv.indexOf('-p') !== -1;
-
-// if (process.env.NODE_ENV === `development`) {
-if (!!isProduction) {
+if (process.env.NODE_ENV !== `production`) {
   const createLogger = require(`redux-logger`);
   const logger = createLogger();
   middlewares.push(logger);
 }
 
+const initStore = () => {
+  if (process.env.NODE_ENV !== `production`) {
+    return compose(
+      applyMiddleware(...middlewares),
+      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+      autoRehydrate()
+    )(createStore)(appReducers);
+  }else{
+    return compose(
+      applyMiddleware(...middlewares),
+      autoRehydrate()
+    )(createStore)(appReducers);
+  }
+}
 
-export const store = compose(
-  applyMiddleware(...middlewares),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )(createStore)(appReducers);
+export const store = initStore()
 
-// export const store = createStore(
-//   appReducers,
-//   applyMiddleware(
-//     thunk,
-//     logger
-//   ),
-//   // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-// );
+import localforage from 'localForage'
+const persistConfig = {
+  storage: localforage
+}
+persistStore(store, persistConfig, () => {
+  console.log('rehydration complete');
+})
 
-console.log(store.getState());
+// Purge the persistant storage
+// persistStore(store, config, callback).purge()
+
+
+// console.log(store.getState());
 

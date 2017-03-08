@@ -1,6 +1,7 @@
 import {
   GITHUB_AUTH_IS_INITIALIZING, GITHUB_IS_LOGGING_IN, GITHUB_IS_LOGGED_IN,
   GITHUB_SET_INFO} from '../actions/githubActions'
+import { REHYDRATE } from 'redux-persist/constants'
 
 const initialState = {
   isInitializing: false,
@@ -24,6 +25,22 @@ const initialState = {
 
 const githubAuth = (state = initialState, action) => {
   switch (action.type) {
+    case REHYDRATE:
+      console.log('REHYDRATE: githubAuth');
+      const incoming = action.payload.githubAuth
+      // console.log(incoming.specialKey);
+      // console.log(incoming);
+      // console.log('------');
+      // if (incoming) return { 
+      //   ...state, 
+      //   ...incoming, 
+      //   specialKey: processSpecial(incoming.specialKey) 
+      // }
+      if (incoming) return {
+        ...state,
+        ...incoming
+      }
+      return state
     case GITHUB_AUTH_IS_INITIALIZING:
       return Object.assign({}, state, {
         isInitializing: action.isInitializing,

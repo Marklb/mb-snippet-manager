@@ -75,8 +75,8 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    console.log('componentWillMount');
-    this.props.githubAuthInit();
+    // console.log('componentWillMount');
+    // this.props.githubAuthInit();
   }
 
   render() {

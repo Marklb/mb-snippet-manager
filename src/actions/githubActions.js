@@ -1,6 +1,5 @@
-import { githubSignIn, githubGetInfo} from '../common/mb-github'
+import { githubSignIn, githubSignOut, githubGetInfo} from '../common/mb-github'
 
-// export const GITHUB_AUTH_INIT = 'GITHUB_AUTH_INIT'
 export const GITHUB_AUTH_IS_INITIALIZING = 'GITHUB_AUTH_IS_INITIALIZING'
 export const GITHUB_IS_LOGGING_IN = 'GITHUB_IS_LOGGING_IN'
 export const GITHUB_IS_LOGGED_IN = 'GITHUB_IS_LOGGED_IN'
@@ -29,8 +28,8 @@ const githubIsLoggedIn = (isLoggedIn) => {
 }
 
 const githubSetInfo = (info) => {
-  console.log('info');
-  console.log(info);
+  // console.log('info');
+  // console.log(info);
   return {
     type: GITHUB_SET_INFO,
     ...info
@@ -38,7 +37,7 @@ const githubSetInfo = (info) => {
 }
 
 export const githubAuthInit = () => dispatch => {
-  console.log('githubAuthInit');
+  // console.log('githubAuthInit');
   dispatch(githubIsLoggedIn(false));
   dispatch(githubAuthIsInitializing(true));
   return new Promise((resolve, reject) => {
@@ -49,14 +48,14 @@ export const githubAuthInit = () => dispatch => {
       reject(Error('Problem initializing github auth'));
     }
   }).then((result) => {
-    console.log('result');
-    console.log(result);
+    // console.log('result');
+    // console.log(result);
     dispatch(githubAuthIsInitializing(false));
     dispatch(githubSetInfo(result));
     dispatch(githubIsLoggedIn(true));
   }, (err) => {
-    console.log('err');
-    console.log(err);
+    // console.log('err');
+    // console.log(err);
     dispatch(githubAuthIsInitializing(false));
   });
 }
@@ -67,18 +66,40 @@ export const githubLogin = () => dispatch => {
   return new Promise((resolve, reject) => {
     githubSignIn()
     .then((result) => {
-      console.log(result);
+      // console.log(result);
       dispatch(githubSetInfo(result));
       resolve("Logged in");
     },(err) => {
       reject(Error('Problem Logging In'));
     });
   }).then((result) => {
-    console.log('result');
-    console.log(result);
+    // console.log('result');
+    // console.log(result);
     dispatch(githubIsLoggingIn(false));
+    dispatch(githubIsLoggedIn(true));
   }, (err) => {
-    console.log('err');
-    console.log(err);
+    // console.log('err');
+    // console.log(err);
+    dispatch(githubIsLoggingIn(false));
+    dispatch(githubIsLoggedIn(false));
+  });
+}
+
+export const githubLogOut = () => dispatch => {
+  return new Promise((resolve, reject) => {
+    githubSignOut()
+      .then((result) => {
+        // console.log(result);
+        resolve('Signed out');
+      }, (err) => {
+        reject(Error('Problem Signing out'));
+      });
+  }).then((result) => {
+    // console.log('result');
+    // console.log(result);
+    dispatch(githubIsLoggedIn(false));
+  }, (err) => {
+    // console.log('err');
+    // console.log(err);
   });
 }
