@@ -5,7 +5,7 @@ const BUILD_PATH_PREFIX = (prod) ? '' : '/mb-snippet-manager';
 
 
 export default {
-  devtool: 'inline-source-map',
+  // devtool: 'inline-source-map',
   entry: `${__dirname}/src/index.js`,
   output: {
     path: `${__dirname}${BUILD_PATH_PREFIX}/build`,
