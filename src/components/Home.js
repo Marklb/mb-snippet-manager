@@ -12,7 +12,43 @@ import CreateGist from './CreateGist'
 import MenuAccountDropdown from '../containers/MenuAccountDropdown'
 import SelectedGistPanel from './SelectedGistPanel'
 
-import { getWidth, getHeight } from 'mblib-dom/lib/utils'
+// TODO: Fix my mblib-dom module
+// import { getWidth, getHeight } from 'mblib-dom/lib/utils'
+const getWidth = (element = undefined) => {
+  if (element !== undefined) {
+    return element.innerWidth;
+  }
+
+  if (self.innerWidth) {
+    return self.innerWidth;
+  }
+
+  if (document.documentElement && document.documentElement.clientWidth) {
+    return document.documentElement.clientWidth;
+  }
+
+  if (document.body) {
+    return document.body.clientWidth;
+  }
+};
+
+const getHeight = (element = undefined) => {
+  if (element !== undefined) {
+    return element.innerHeight;
+  }
+
+  if (self.innerHeight) {
+    return self.innerHeight;
+  }
+
+  if (document.documentElement && document.documentElement.clientHeight) {
+    return document.documentElement.clientHeight;
+  }
+
+  if (document.body) {
+    return document.body.clientHeight;
+  }
+};
 
 require("../styles/home.scss");
 

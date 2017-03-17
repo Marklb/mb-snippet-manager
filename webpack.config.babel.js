@@ -36,11 +36,7 @@ export default {
     extensions: ['.js', '.jsx'],
   },
 
-  plugins: process.argv.indexOf('-p') === -1 ? [
-      // new webpack.DefinePlugin({
-      //   'process.env.NODE_ENV': JSON.stringify('production'),
-      // }),
-    ] : [
+  plugins: process.argv.indexOf('-p') === -1 ? null : [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
     }),
