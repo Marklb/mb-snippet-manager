@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 // import { toggleGist } from '../actions';
 import { initGists } from '../actions/gistsActions';
+import { setSelectedGist } from '../actions/selectedGistActions';
 import GistsList from '../components/GistsList';
 
 // const getGists = (gists, filter) => {
@@ -18,7 +19,8 @@ const mapStateToProps = (state) => {
   return {
     // gists: getGists(state.gists, state.visibilityFilter),
     gists: state.gists,
-    githubAuth: state.githubAuth
+    githubAuth: state.githubAuth,
+    selectedGist: state.selectedGist,
   }
 }
 
@@ -26,7 +28,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     refreshGists: () => {
       dispatch(initGists())
-    }
+    },
+    setSelectedGist: (id) => {
+      dispatch(setSelectedGist(id));
+    },
   }
 }
 

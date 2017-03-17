@@ -18,8 +18,10 @@ class GistsList extends React.Component {
       id: PropTypes.string.isRequired,
       data: PropTypes.object.isRequired
     }).isRequired).isRequired,
+    selectedGist: PropTypes.object.isRequired,
     githubAuth: PropTypes.object,
-    refreshGists: PropTypes.func.isRequired
+    refreshGists: PropTypes.func.isRequired,
+    setSelectedGist: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -46,30 +48,6 @@ class GistsList extends React.Component {
   onClickRefreshListBtn(e) {
     console.log('Clicked');
     this.props.refreshGists();
-    // const token = window.localStorage.getItem('github_token');
-    // console.log(token);
-    // const token = this.props.githubAuth.accessToken;
-    // console.log(this.props);
-    // console.log(token);
-    // var config = {
-    //   headers: { 'Authorization': `token ${token}` }
-    // };
-    // // // axios.get('"https://api.github.com/users', {
-    // // //   params: {
-    // // //     ID: 8348647
-    // // //   }
-    // // // })
-    // // // axios.get('https://api.github.com/users/marklb')
-    // // axios.get('https://api.github.com/user/8348647')
-    // // // axios.get('https://api.github.com/users')
-    // axios.get('https://api.github.com/gists', config)
-    //   .then(function (response) {
-    //     console.log('response');
-    //     console.log(response);
-    //   })
-    //   .catch(function (error) {
-    //     // console.log(error);
-    //   });
   }
 
   render() {
@@ -87,6 +65,7 @@ class GistsList extends React.Component {
     // console.log('GistsList render');
     const gists = this.props.gists;
     const onGistClick = this.props.onGistClick;
+    // console.log(this.props);
     return (
       <div>
         {header}
@@ -95,7 +74,8 @@ class GistsList extends React.Component {
             <GistsListItem
               key={gist.id}
               gist={gist}
-              onClick={() => onGistClick(gist.id)}
+              isSelected={this.props.selectedGist.id == gist.id}
+              onClick={() => this.props.setSelectedGist(gist.id)}
             />
           )}
         </ul>

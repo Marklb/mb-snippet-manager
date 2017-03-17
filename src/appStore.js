@@ -1,10 +1,10 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import { persistStore, autoRehydrate } from 'redux-persist'
+import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk'
 import appReducers from './reducers'
 
-const middlewares = [thunk]
-
+const middlewares = [thunk];
 if (process.env.NODE_ENV !== `production`) {
   const createLogger = require(`redux-logger`);
   const logger = createLogger();
@@ -13,9 +13,8 @@ if (process.env.NODE_ENV !== `production`) {
 
 const initStore = () => {
   if (process.env.NODE_ENV !== `production`) {
-    return compose(
+    return composeWithDevTools(
       applyMiddleware(...middlewares),
-      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
       autoRehydrate()
     )(createStore)(appReducers);
   }else{

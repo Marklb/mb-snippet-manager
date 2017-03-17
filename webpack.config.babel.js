@@ -6,6 +6,7 @@ const BUILD_PATH_PREFIX = (prod) ? '' : '/mb-snippet-manager';
 
 export default {
   // devtool: 'inline-source-map',
+  devtool: 'source-map',
   entry: `${__dirname}/src/index.js`,
   output: {
     path: `${__dirname}${BUILD_PATH_PREFIX}/build`,
@@ -35,7 +36,11 @@ export default {
     extensions: ['.js', '.jsx'],
   },
 
-  plugins: process.argv.indexOf('-p') === -1 ? null : [
+  plugins: process.argv.indexOf('-p') === -1 ? [
+      // new webpack.DefinePlugin({
+      //   'process.env.NODE_ENV': JSON.stringify('production'),
+      // }),
+    ] : [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
     }),

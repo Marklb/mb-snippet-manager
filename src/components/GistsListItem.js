@@ -12,7 +12,8 @@ class GistsListItem extends React.Component {
     onClick: PropTypes.func.isRequired,
     // completed: PropTypes.bool.isRequired,
     // text: PropTypes.string.isRequired
-    gist: PropTypes.object.isRequired
+    gist: PropTypes.object.isRequired,
+    isSelected: PropTypes.bool.isRequired,
   };
 
   constructor(props) {
@@ -28,18 +29,23 @@ class GistsListItem extends React.Component {
     const onClick = this.props.onClick;
     // const text = this.props.gist.id;
     const gist = this.props.gist.data;
-    console.log(gist);
+    // console.log(gist);
     const files = Object.keys(gist.files);
-    console.log(files);
+    // console.log(files);
     let text = gist.id;
     if (files.length > 0) {
       text = files[0];
+    }
+
+    const style = {
+      ...s.item,
+      ...((this.props.isSelected) ? s.itemSelected : {}),
     }
     return (
       <li
         onClick={onClick}
         style={{
-          ...s.item
+          ...style
         }}
       >
         {text}

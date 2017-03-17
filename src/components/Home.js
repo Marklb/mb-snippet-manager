@@ -4,41 +4,18 @@ import Radium from 'radium'
 import s from '../styles/home.style'
 
 import Sidebar from 'react-sidebar'
+// import ScrollArea from 'react-scrollbar'
+import { Scrollbars } from 'react-custom-scrollbars';
+
 import SidebarGistsList from '../containers/SidebarGistsList'
 import CreateGist from './CreateGist'
 import MenuAccountDropdown from '../containers/MenuAccountDropdown'
+import SelectedGistPanel from './SelectedGistPanel'
+
+import { getWidth, getHeight } from 'mblib-dom/lib/utils'
 
 require("../styles/home.scss");
 
-// TODO: Move getWidth and getHeight into my utilities module
-let mySizeUtils = {
-  getWidth: function () {
-    if (self.innerWidth) {
-      return self.innerWidth;
-    }
-
-    if (document.documentElement && document.documentElement.clientWidth) {
-      return document.documentElement.clientWidth;
-    }
-
-    if (document.body) {
-      return document.body.clientWidth;
-    }
-  },
-  getHeight: function () {
-    if (self.innerHeight) {
-      return self.innerHeight;
-    }
-
-    if (document.documentElement && document.documentElement.clientHeight) {
-      return document.documentElement.clientHeight;
-    }
-
-    if (document.body) {
-      return document.body.clientHeight;
-    }
-  }
-}
 
 /*
 */
@@ -49,7 +26,6 @@ class Home extends React.Component {
 
   constructor(props) {
     super(props);
-
 
     this.state = {
       sidebarOpen: false,
@@ -117,7 +93,7 @@ class Home extends React.Component {
     if (this.state.isSidebarResizable) {
       sidebarStyle.width = this.state.sidebarWidth + 'px';
     } else {
-      sidebarStyle.width = (mySizeUtils.getWidth() - 10) + 'px';
+      sidebarStyle.width = (getWidth() - 10) + 'px';
     }
     let sidebarContent = (
       <div style={sidebarStyle}>
@@ -125,32 +101,45 @@ class Home extends React.Component {
         <SidebarGistsList />
       </div>
     );
-
+    // {display: 'flex', flexFlow: 'column', height: '100%'}
+    // {/*<Scrollbars>
+    // </Scrollbars>*/}
+    console.log(getHeight());
     return (
       <Sidebar sidebar={sidebarContent}
         open={this.state.sidebarOpen}
         docked={this.state.sidebarDocked}
         onSetOpen={this.onSetSidebarOpen}>
-        <div style={s.topHeader}>
-          {this.getSidebarToggleBtn()}
-          {/*<div style={s.githubAuthBtn} onClick={this.onClickGithubAuthBtn}>
-            Logout
-          </div>*/}
-          <div style={s.menuBtnsContainer}>
-            <MenuAccountDropdown />
+        <div style={{ ...s.pageContainer}}>
+          <div style={{ ...s.topHeader}}>
+            {this.getSidebarToggleBtn()}
+            {/*<div style={s.githubAuthBtn} onClick={this.onClickGithubAuthBtn}>
+              Logout
+            </div>*/}
+            <div style={s.menuBtnsContainer}>
+              <MenuAccountDropdown />
+            </div>
           </div>
-        </div>
 
-        {/* <div className='container'>
-          <div className='page-top-header'>
-            <h1 className='page-top-title'>Mark Berry</h1>
-          </div>
-          <div className='page-content'>
-            {this.props.children}
-          </div>
-        </div> */}
-         {this.props.children} 
-        <CreateGist />
+          {/* <div className='container'>
+            <div className='page-top-header'>
+              <h1 className='page-top-title'>Mark Berry</h1>
+            </div>
+            <div className='page-content'>
+              {this.props.children}
+            </div>
+          </div> */}
+          {/*{this.props.children} */}
+          {/*<CreateGist />*/}
+          
+          
+          <Scrollbars style={s.contentContainer}>
+            <SelectedGistPanel />
+          </Scrollbars>
+          
+          
+
+        </div>
       </Sidebar>
     );
   }
